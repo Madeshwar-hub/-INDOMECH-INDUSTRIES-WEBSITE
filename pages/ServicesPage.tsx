@@ -1,7 +1,6 @@
 import React from 'react';
 import PageTitle from '../components/PageTitle';
 import { useImageZoom } from '../contexts/ImageZoomContext';
-import ProductSlider from '../components/ProductSlider';
 
 const ServicesPage: React.FC = () => {
     const { zoomImage } = useImageZoom();
@@ -73,7 +72,6 @@ const ServicesPage: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <ProductSlider />
         </div>
     );
 };

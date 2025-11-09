@@ -1,46 +1,24 @@
 import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import { useImageZoom } from '../contexts/ImageZoomContext';
-import ProductSlider from '../components/ProductSlider';
+import { allProducts } from '../data/products';
+import ProductCard from '../components/ProductCard';
 
-// Updated product images with provided URLs
-const productPhotoUrls = [
-    'https://adamastyres.com/images/gallery/02.jpg',
-    'https://adamastyres.com/images/gallery/03.jpg',
-    'https://adamastyres.com/images/gallery/03.jpg', // Keeping duplicate as provided
-    'https://adamastyres.com/images/gallery/05.jpg',
-    'https://adamastyres.com/images/gallery/06.jpg',
-    'https://adamastyres.com/images/gallery/07.jpg',
-    'https://adamastyres.com/images/gallery/08.jpg',
-    'https://adamastyres.com/images/gallery/09.jpg',
-    'https://adamastyres.com/images/gallery/10.jpg',
-    'https://adamastyres.com/images/gallery/11.jpg',
-    'https://adamastyres.com/images/gallery/12.jpg',
-    'https://adamastyres.com/images/gallery/20.jpg',
-    'https://adamastyres.com/images/gallery/21.jpg',
-    'https://adamastyres.com/images/gallery/22.jpg',
-    'https://adamastyres.com/images/gallery/23.jpg',
-];
-
-const productImages = [
-    {
-        id: 1,
-        src: 'https://adamastyres.com/images/gallery/01.jpg',
-        alt: 'Product Image 1'
-    },
-    ...productPhotoUrls.map((url, i) => ({
-        id: i + 2,
-        src: url,
-        alt: `Product Image ${i + 2}`
-    }))
-];
-
-// Updated feedback images based on original site structure
 const feedbackImages = Array.from({ length: 5 }, (_, i) => ({
     id: i + 1,
     src: `https://adamastyres.com/images/gallery/cusfb${i + 1}.jpg`,
     alt: `Customer Feedback Image ${i + 1}`,
 }));
+
+// Create a list of products where each entry represents one image
+const galleryProducts = allProducts.flatMap(product =>
+    product.images.map((image, index) => ({
+        ...product,
+        images: [image], // Card will only show one image
+        uniqueId: `${product.name}-${index}` // Create a unique key for each card
+    }))
+);
+
 
 const GalleryPage: React.FC = () => {
     const [activeTab, setActiveTab] = useState('products');
@@ -90,12 +68,17 @@ const GalleryPage: React.FC = () => {
                     </div>
 
                     <div>
-                        {activeTab === 'products' && <ImageGrid images={productImages} />}
+                        {activeTab === 'products' && (
+                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                                {galleryProducts.map((product) => (
+                                    <ProductCard key={product.uniqueId} product={product} />
+                                ))}
+                            </div>
+                        )}
                         {activeTab === 'feedback' && <ImageGrid images={feedbackImages} />}
                     </div>
                 </div>
             </section>
-            <ProductSlider />
         </div>
     );
 };

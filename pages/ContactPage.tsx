@@ -1,8 +1,5 @@
-
-
 import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
-import ProductSlider from '../components/ProductSlider';
 
 const ContactPage: React.FC = () => {
     const breadcrumbs = [
@@ -82,7 +79,6 @@ const ContactPage: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <ProductSlider />
         </div>
     );
 };
