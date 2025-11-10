@@ -16,11 +16,11 @@ const Footer: React.FC = () => {
                         </Link>
                         <div className="flex items-start space-x-3">
                             <MapPinIcon />
-                            <p className="text-sm">NO 50, ALAPAKKAM MAIN ROAD, MADURAVOYAL, CHENNAI - 600095</p>
+                            <p className="text-sm">No.29, Sipcot Industrial Estate, Sidco, Vellagudi, Pudukkottai-622002, Tamil Nadu, India</p>
                         </div>
                          <div className="flex items-start space-x-3">
                             <GstIcon />
-                            <p className="text-sm">GSTIN: 33AVUPC7944G1ZA</p>
+                            <p className="text-sm">GSTIN: 33AAXCA8574H1Z1</p>
                         </div>
                         <div className="flex items-center space-x-3">
                             <PhoneIcon />

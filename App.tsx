@@ -11,6 +11,8 @@ const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const ProductsPage = lazy(() => import('./pages/ProductsPage'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const CertificatePage = lazy(() => import('./pages/CertificatePage'));
+const SearchPage = lazy(() => import('./pages/SearchPage'));
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -29,6 +31,8 @@ const App: React.FC = () => {
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/certificate" element={<CertificatePage />} />
+              <Route path="/search" element={<SearchPage />} />
             </Routes>
           </Suspense>
         </main>

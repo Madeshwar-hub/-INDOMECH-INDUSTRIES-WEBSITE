@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useImageZoom } from '../contexts/ImageZoomContext';
 import { Product } from '../data/products';
 
 interface ProductCardProps {
-    product: Omit<Product, 'type' | 'size' | 'feature' | 'od' | 'sw'> & { images: string[] };
+    product: Product;
     imageIndex?: number;
 }
 

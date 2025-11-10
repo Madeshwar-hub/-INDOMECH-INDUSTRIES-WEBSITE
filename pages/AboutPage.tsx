@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from '../components/PageTitle';
@@ -13,11 +14,13 @@ const factsheetData = {
         { label: 'GST Registration Date', value: '04-01-2023' },
         { label: 'Legal Status of Firm', value: 'Limited Company' },
         { label: 'Annual Turnover', value: 'Rs. 5 - 25 Crore' },
+        { label: 'GST Partner Name', value: ['Karthik Vigneshwar', 'Balachandar Siddharth Swaminathan', 'Pare Palli Bapiraju Hari Kalyan'] }
     ],
     statutoryProfile: [
         { label: 'Import Export Code (IEC)', value: 'AAXCA8574H' },
         { label: 'GST No.', value: '33AAXCA8574H1Z1' },
         { label: 'CIN No.', value: 'U25199TN2022PTC156421' },
+        { label: 'Banker', value: ['Axis Bank', 'Karur Vysya Bank'] }
     ]
 };
 
@@ -59,15 +62,7 @@ const CategorySlider: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <style>{`
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-            `}</style>
+            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`}</style>
         </section>
     );
 };
@@ -111,35 +106,62 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
             
+            <section className="py-20 bg-brand-darker text-center">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-white uppercase">Trust & <span className="text-brand-primary">Verification</span></h2>
+                    <p className="max-w-3xl mx-auto mt-4 text-brand-gray">
+                        We are a verified business, committed to transparency and quality. View our Certificate of Trust from IndiaMART.
+                    </p>
+                    <div className="mt-8">
+                        <Link to="/certificate" className="bg-brand-primary text-black font-bold py-3 px-8 uppercase hover:bg-yellow-300 transition-colors inline-flex items-center space-x-2 rounded">
+                            <CertificateIcon />
+                            <span>View Certificate</span>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
             <CategorySlider />
 
-            <section className="py-20 bg-brand-darker">
+            <section className="py-20 bg-brand-dark">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-white text-center mb-12">Fact<span className="text-brand-primary">sheet</span></h2>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Basic Information */}
-                        <div className="bg-brand-dark p-8 rounded-lg">
+                        <div className="bg-brand-darker p-8 rounded-lg">
                              <h3 className="text-xl font-semibold text-white mb-6 border-l-4 border-brand-primary pl-4">Basic Information</h3>
                              <table className="w-full text-sm text-left text-brand-gray">
                                  <tbody>
                                      {factsheetData.basicInfo.map((item, index) => (
-                                         <tr key={index} className="border-b border-gray-700">
-                                             <th scope="row" className="px-4 py-3 font-medium text-white whitespace-nowrap">{item.label}</th>
-                                             <td className="px-4 py-3">{item.value}</td>
+                                         <tr key={index} className="border-b border-gray-700 last:border-b-0">
+                                             <th scope="row" className="px-4 py-3 font-medium text-white whitespace-nowrap align-top">{item.label}</th>
+                                             <td className="px-4 py-3">
+                                                {Array.isArray(item.value) ? (
+                                                    <ul className="list-disc list-inside space-y-1">
+                                                        {item.value.map((v, i) => <li key={i}>{v}</li>)}
+                                                    </ul>
+                                                ) : item.value}
+                                             </td>
                                          </tr>
                                      ))}
                                  </tbody>
                              </table>
                         </div>
                         {/* Statutory Profile */}
-                        <div className="bg-brand-dark p-8 rounded-lg">
+                        <div className="bg-brand-darker p-8 rounded-lg">
                              <h3 className="text-xl font-semibold text-white mb-6 border-l-4 border-brand-primary pl-4">Statutory Profile</h3>
                              <table className="w-full text-sm text-left text-brand-gray">
                                  <tbody>
                                      {factsheetData.statutoryProfile.map((item, index) => (
-                                         <tr key={index} className="border-b border-gray-700">
-                                             <th scope="row" className="px-4 py-3 font-medium text-white whitespace-nowrap">{item.label}</th>
-                                             <td className="px-4 py-3">{item.value}</td>
+                                         <tr key={index} className="border-b border-gray-700 last:border-b-0">
+                                             <th scope="row" className="px-4 py-3 font-medium text-white whitespace-nowrap align-top">{item.label}</th>
+                                             <td className="px-4 py-3">
+                                                {Array.isArray(item.value) ? (
+                                                    <ul className="list-disc list-inside space-y-1">
+                                                        {item.value.map((v, i) => <li key={i}>{v}</li>)}
+                                                    </ul>
+                                                ) : item.value}
+                                             </td>
                                          </tr>
                                      ))}
                                  </tbody>
@@ -149,26 +171,26 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-             <section className="py-20 bg-brand-dark">
+             <section className="py-20 bg-brand-darker">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-white text-center mb-12">Company <span className="text-brand-primary">Album</span></h2>
-                    <div className="space-y-16">
+                    <h2 className="text-3xl font-bold text-white text-center mb-12">Our <span className="text-brand-primary">Infrastructure</span></h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {companyAlbum.map((image, index) => (
-                           <div key={index} className="max-w-3xl mx-auto">
-                                <h3 className="text-2xl font-semibold text-white mb-6 text-center">{image.alt}</h3>
+                           <div key={index} className="bg-brand-dark rounded-lg shadow-2xl flex flex-col p-4">
                                 <div 
-                                    className="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer"
+                                    className="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer flex-grow"
                                     onClick={() => zoomImage(image.src)}
                                 >
                                     <img 
                                         src={image.src} 
                                         alt={image.alt} 
-                                        className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-300"
+                                        className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
                                     />
                                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/70 transition-colors duration-300 flex items-center justify-center">
                                         <ZoomInIcon />
                                     </div>
                                 </div>
+                                <h3 className="text-lg font-semibold text-white mt-4 text-center">{image.alt}</h3>
                             </div>
                         ))}
                     </div>
@@ -177,6 +199,12 @@ const AboutPage: React.FC = () => {
         </div>
     );
 };
+
+const CertificateIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+);
 
 const ZoomInIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

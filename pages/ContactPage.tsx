@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 
@@ -34,7 +35,7 @@ const ContactPage: React.FC = () => {
 
             <section className="h-[500px] bg-brand-dark">
                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.433519897816!2d80.15312407581136!3d13.07139221226021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526111d4e92a7b%3A0x89232a5a576150d8!2s50%2C%20Alapakkam%20Main%20Rd%2C%20Alapakkam%2C%20Chennai%2C%20Tamil%20Nadu%20600116%2C%20India!5e0!3m2!1sen!2sus!4v1716300000000!5m2!1sen!2sus" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.323565431661!2d78.79093331479679!3d10.316086992635954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00706c88888889%3A0x6b8d2d645398d5c4!2sSIPCOT%20Industrial%20Complex%2C%20Pudukkottai!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 
@@ -70,8 +71,8 @@ const ContactPage: React.FC = () => {
                         <div className="lg:w-1/2 space-y-10">
                             <AddressCard 
                                 title="Office & Works"
-                                address="NO 50, ALAPAKKAM MAIN ROAD, MADURAVOYAL, CHENNAI - 600095"
-                                gstin="33AVUPC7944G1ZA"
+                                address="No.29, Sipcot Industrial Estate, Sidco, Vellagudi, Pudukkottai-622002, Tamil Nadu, India"
+                                gstin="33AAXCA8574H1Z1"
                                 phone="+91 96772 14411"
                                 email="indomech.as2021@gmail.com"
                             />
