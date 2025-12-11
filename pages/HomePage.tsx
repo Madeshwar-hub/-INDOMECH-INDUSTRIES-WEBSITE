@@ -41,14 +41,39 @@ const fastMovingTyres = [
 
 const HomePage: React.FC = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [enquirySlideIndex, setEnquirySlideIndex] = useState(0);
+    const [qrCodeUrl, setQrCodeUrl] = useState('');
     const { zoomImage } = useImageZoom();
 
+    // Hero Slider
     useEffect(() => {
         const timer = setTimeout(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
         }, 5000);
         return () => clearTimeout(timer);
     }, [currentSlide]);
+
+    // Enquiry Image Slideshow
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setEnquirySlideIndex((prev) => (prev + 1) % slides.length);
+        }, 4000);
+        return () => clearInterval(timer);
+    }, []);
+
+    // Generate Dynamic QR Code URL based on current location
+    useEffect(() => {
+        // Get the current page URL without hash or query parameters
+        // This preserves 'index.html' if it is present in the URL, preventing 404 errors
+        // on servers that do not automatically serve index.html for directory roots.
+        const baseUrl = window.location.href.split('#')[0].split('?')[0];
+        
+        // Append the hash route for the products page
+        // If baseUrl ends in '/', result is '.../#/products'
+        // If baseUrl ends in 'index.html', result is '.../index.html#/products'
+        // Both formats are correctly handled by the browser and HashRouter.
+        setQrCodeUrl(`${baseUrl}#/products`);
+    }, []);
 
     return (
         <div>
@@ -210,10 +235,33 @@ const HomePage: React.FC = () => {
             <section className="py-20 bg-brand-dark">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                        <div className="lg:w-1/2">
-                            <img src="https://adamastyres.com/images/slide01.jpg" alt="Tyres" className="rounded-lg shadow-lg w-full cursor-pointer transition-transform duration-300 hover:scale-105" onClick={() => zoomImage('https://adamastyres.com/images/slide01.jpg')} />
+                        {/* Slideshow on Left */}
+                        <div className="lg:w-1/2 w-full">
+                            <div className="relative overflow-hidden rounded-lg shadow-lg">
+                                {slides.map((slide, idx) => (
+                                    <div 
+                                        key={idx} 
+                                        className={`absolute inset-0 transition-opacity duration-1000 ${idx === enquirySlideIndex ? 'opacity-100' : 'opacity-0'}`}
+                                    >
+                                        <img 
+                                            src={slide.image} 
+                                            alt="Enquiry Slide" 
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                ))}
+                                {/* Transparent placeholder to maintain aspect ratio */}
+                                <img 
+                                    src={slides[enquirySlideIndex].image} 
+                                    alt="Enquiry Main"
+                                    className="w-full h-auto object-cover opacity-0 pointer-events-none"
+                                />
+                                <div className="absolute inset-0 z-10 cursor-pointer" onClick={() => zoomImage(slides[enquirySlideIndex].image)}></div>
+                            </div>
                         </div>
-                        <div className="lg:w-1/2">
+
+                        {/* Text and Scanner on Right */}
+                        <div className="lg:w-1/2 w-full">
                             <h2 className="text-3xl font-bold text-white">Send an <span className="text-brand-primary">Enquiry</span></h2>
                             <p className="mt-4 text-brand-gray">We are incredibly responsive to your requests and value your business. Get in touch with us for any questions about features, trials, pricing, or anything else.</p>
                             <ul className="mt-4 space-y-2">
@@ -221,17 +269,28 @@ const HomePage: React.FC = () => {
                                 <ListItem>Wide Range of Services</ListItem>
                                 <ListItem>24/7 Customer Support</ListItem>
                             </ul>
+                            
+                            {/* Product Scanner Section */}
                             <div className="mt-8">
-                                <h4 className="text-xl font-semibold text-white mb-4">Scan to View a Sample Product</h4>
-                                <div className="flex items-center gap-6">
-                                    <a href="https://adamastyres.com/images/gallery/01.jpg" target="_blank" rel="noopener noreferrer" title="View product image">
-                                        <img 
-                                            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://adamastyres.com/images/gallery/01.jpg&ecc=H&margin=10&color=ffc222&bgcolor=1e1e1e&qzone=1" 
-                                            alt="QR Code linking to product image" 
-                                            className="rounded-lg border-4 border-brand-darker"
-                                        />
-                                    </a>
-                                    <p className="text-brand-gray">Or <Link to="/contact" className="text-brand-primary hover:underline">contact us</Link> for more information about our products.</p>
+                                <h4 className="text-xl font-semibold text-white mb-4">Scan to View Our Products</h4>
+                                <div className="bg-brand-darker p-6 rounded-lg border border-white/5 shadow-inner">
+                                    <div className="flex flex-col items-center justify-center gap-4 text-center">
+                                        {/* Static QR Code */}
+                                        <div className="bg-white p-2 rounded-lg shadow-lg">
+                                            {qrCodeUrl ? (
+                                                <a href={qrCodeUrl} target="_blank" rel="noopener noreferrer" title="Scan to view all products">
+                                                    <img 
+                                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeUrl)}&ecc=M&margin=0&color=000000&bgcolor=FFFFFF`} 
+                                                        alt="Product QR Code" 
+                                                        className="w-32 h-32"
+                                                    />
+                                                </a>
+                                            ) : (
+                                                <div className="w-32 h-32 flex items-center justify-center bg-gray-200 text-gray-500 text-xs">Loading QR...</div>
+                                            )}
+                                        </div>
+                                        <p className="text-brand-gray text-sm">Scan to browse our complete catalog</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
